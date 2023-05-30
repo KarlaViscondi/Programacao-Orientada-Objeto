@@ -201,3 +201,4 @@ export async function AppRoutes(app: FastifyInstance){
 //delete - remove
 //put - atualiza registro inteiro
 //patch - atualiza um campo específicio
+//teste
