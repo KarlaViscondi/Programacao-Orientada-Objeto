@@ -3,7 +3,7 @@ async function entrar(){
     const username = document.getElementById("username").value 
     const password = document.getElementById("password").value 
     const corpo = {username, password}
-    await fetch('http://localhost:3333/user/verifica',{
+    let resposta = await fetch('http://localhost:3333/user/verifica',{
         method: 'POST',
         body: JSON.stringify(corpo),
         headers: {
@@ -11,16 +11,19 @@ async function entrar(){
         }
     })
     .then(resp => {
-        if (resp == null){
-            alert('Usuário ou Senha incorreto')
-        }
-        else{
-            alert('OK')
-        }
+        return resp.json()
     })
     .catch(error => {
         alert(`Erro na execução ${error}`)
-        return
     })
+    if (resposta == null){
+        alert('Usuário ou senha não existe')
+    }else{
+        //guarda no cookie uma variavel chamada id contendo o id do usuario
+        document.cookie = `id=${resposta.id}`
+        //vai direcionar o usuario para a tela principal do sistema
+        //vamos usar live server
+        window.open(`http://127.0.0.1:5500/loja/frontend/index.html`);
+    }
     
 }

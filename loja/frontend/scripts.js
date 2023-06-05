@@ -21,7 +21,11 @@ function editar(id, name, description, quantity){
 }
 
 async function consulta(){
-    let produtos = await fetch("http://localhost:3333/products")
+    //precisamos recuparar o valor do cookie, o valor recuperado  será, id=alguma coisa
+    //o split vai dividir o conteudo em um vetor
+    // aux[0] = id e aux[1] = alguma coisa
+    let aux = document.cookie.split('=')
+    let produtos = await fetch(`http://localhost:3333/products/${aux[1]}`)
         .then(resposta => {
             return resposta.json()
         })
@@ -47,7 +51,9 @@ async function confirmar(){
     let produto
     if(!id){
         method= 'POST'
-        produto = {name, description, quantity}
+        let aux = document.cookie.split('=')
+        let userid = aux[1]
+        produto = {name, description, quantity, userid}
     }
     else{
         method= 'PUT'
